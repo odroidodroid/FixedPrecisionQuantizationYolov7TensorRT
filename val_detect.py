@@ -34,10 +34,10 @@ def test(data,
          save_txt=False,  # for auto-labelling
          save_hybrid=False,  # for hybrid auto-labelling
          save_conf=False,  # save auto-label confidences
-         plots=True,
+         plots=False,
          wandb_logger=None,
          compute_loss=None,
-         half_precision=True,
+         half_precision=False,
          trace=False,
          is_coco=False):
     # Initialize/load model and set device
@@ -236,7 +236,7 @@ def test(data,
     # Print speeds
     t = tuple(x / seen * 1E3 for x in (t0, t1, t0 + t1)) + (imgsz, imgsz, batch_size)  # tuple
     if not training:
-        print('Speed: %.1f/%.1f/%.1f ms inference/NMS/total per %gx%g image at batch-size %g' % t)
+        print('Speed: inference %.3f/ NMS %.3f/ total %.3f ms per %gx%g image at batch-size %g' % t)
 
     # Plots
     if plots:
@@ -285,7 +285,7 @@ def test(data,
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='test.py')
-    parser.add_argument('--weights', nargs='+', type=str, default='yolov7.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='../yolov7.pt', help='model.pt path(s)')
     parser.add_argument('--data', type=str, default='data/coco.yaml', help='*.data path')
     parser.add_argument('--batch-size', type=int, default=1, help='size of each image batch')
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
