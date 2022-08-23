@@ -172,8 +172,9 @@ def test(data,
         t1 = time_sync()
 
         dt[0] += t1 - t0
-        trt_outputs, dt1 = common.do_inference_v2(context, bindings, input, output, stream)  # inference and training outputs
-        dt[1] += dt1
+        trt_outputs = common.do_inference_v2(context, bindings, input, output, stream)  # inference and training outputs
+        t2 = time_sync()
+        dt[1] += t2 - t1
         t3 = time_sync()
 
         trt_outputs = trt_outputs.reshape((1, -1, nc + 5))
@@ -295,7 +296,7 @@ def test(data,
 
     # Print speeds
     if not training:
-        print('Speed: inference {} ms NMS {} ms total {} ms per 1 image'.format(dt[1] / seen * 1E3, dt[1] / seen * 1E3, (dt[0] + dt[1]) / seen * 1E3))
+        print('Speed: inference {} ms NMS {} ms total {} ms per 1 image'.format((dt[1] / seen), (dt[1] / seen), ((dt[0] + dt[1]) / seen)))
 
 
     # Print results per class
