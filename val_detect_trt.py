@@ -296,7 +296,7 @@ def test(data,
 
     # Print speeds
     if not training:
-        print('Speed: inference {} ms NMS {} ms image {} ms per 1 image'.format((dt[1] / seen), (dt[2] / seen), ((dt[0]) / seen)))
+        print('Speed: inference {} ms NMS {} ms image {} ms per 1 image'.format((dt[1] / seen)*1000, (dt[2] / seen)* 1000, ((dt[0]) / seen)*1000))
 
 
     # Print results per class
