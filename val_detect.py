@@ -37,7 +37,7 @@ def test(data,
          plots=False,
          wandb_logger=None,
          compute_loss=None,
-         half_precision=False,
+         half=False,
          trace=False,
          is_coco=False,
          evaluate=False,
@@ -65,7 +65,7 @@ def test(data,
             model = TracedModel(model, device, opt.img_size)
 
     # Half
-    half = device.type != 'cpu' and half_precision  # half precision only supported on CUDA
+    half = device.type != 'cpu' and half  # half precision only supported on CUDA
     if half:
         model.half()
 
@@ -276,7 +276,8 @@ if __name__ == '__main__':
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     parser.add_argument('--no-trace', action='store_true', help='don`t trace model')
     parser.add_argument('--set_device', default='0')
-    parser.add_argument('--evaluate', default=True)
+    parser.add_argument('--evaluate', default=False)
+    parser.add_argument('--half', default=False)
     opt = parser.parse_args()
     opt.save_json |= opt.data.endswith('coco.yaml')
     opt.data = check_file(opt.data)  # check file
