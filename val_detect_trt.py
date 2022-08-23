@@ -296,7 +296,7 @@ def test(data,
 
     # Print speeds
     if not training:
-        print('Speed: inference {} ms NMS {} ms image {} ms per 1 image'.format((dt[1] / (seen*1000)), (dt[2] / (seen*1000)), ((dt[0]) / (seen*1000))))
+        print('Speed: inference {} ms NMS {} ms image {} ms per 1 image'.format((dt[1] / seen * 1E3), (dt[2] / seen * 1E3), (dt[0] / seen * 1E3)))
 
 
     # Print results per class
@@ -375,7 +375,7 @@ if __name__ == '__main__':
     parser.add_argument('--half', default=False)
     parser.add_argument('--int8', default=False)
     parser.add_argument('--calib_dataset_path', default='/home/sony/datasets/coco/images/train2017')
-    parser.add_argument('--calib_cache_path', default=None)
+    parser.add_argument('--calib_cache_path', default='/home/sony/projects/runs/calib_cache/yolov7_calib_cache.cache')
     parser.add_argument('--resize', default=True)
     parser.add_argument('--evaluate', default=False)
 
