@@ -66,7 +66,7 @@ def test(data,
         (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
 
-        yolo_model_onnx_path = '/home/sony/projects/yolov7.onnx'
+        yolo_model_onnx_path = '/home/sony/projects/yolov7_.onnx'
 
 
         logger = trt.Logger(trt.Logger.INFO)
@@ -133,8 +133,8 @@ def test(data,
 
         #img = img.to(device, non_blocking=True)
         img = img.cpu().numpy()
-        img = img.astype(np.float32)
         img /= 255.0  # 0 - 255 to 0.0 - 1.0
+        img = img.astype(np.float32)
         targets = targets.to(device)
         nb, _, height, width = img.shape  # batch size, channels, height, width
 
