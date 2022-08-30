@@ -283,21 +283,22 @@ if __name__ == '__main__':
     #check_requirements()
 
     if opt.task in ('train', 'val', 'test'):  # run normally
-        test(opt.data,
-             opt.weights,
-             opt.batch_size,
-             opt.img_size,
-             opt.conf_thres,
-             opt.iou_thres,
-             opt.save_json,
-             opt.single_cls,
-             opt.augment,
-             opt.verbose,
+        test(data=opt.data,
+             weights=opt.weights,
+             batch_size=opt.batch_size,
+             imgsz=opt.img_size,
+             conf_thres=opt.conf_thres,
+             iou_thres=opt.iou_thres,
+             save_json=opt.save_json,
+             single_cls=opt.single_cls,
+             augment=opt.augment,
+             verbose=opt.verbose,
              save_txt=opt.save_txt | opt.save_hybrid,
              save_hybrid=opt.save_hybrid,
              save_conf=opt.save_conf,
              trace=not opt.no_trace,
-             )
+             half=opt.half,
+             evaluate=opt.evaluate)
 
     elif opt.task == 'speed':  # speed benchmarks
         for w in opt.weights:
