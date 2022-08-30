@@ -406,11 +406,10 @@ if __name__ == '__main__':
              half=opt.half,
              int8=opt.int8,
              calib_dataset_path=opt.calib_dataset_path,
+             calib_cache_path=opt.calib_cache_path,
              resize=opt.resize,
              evaluate=opt.evaluate,
              set_device=opt.device,
-             calib_dataset_path='/home/sony/datasets/coco/images/train2017',
-             calib_cache_path='/home/sony/projects/runs/calib_cache/yolov7_calib_cache.cache',
              )
 
     elif opt.task == 'speed':  # speed benchmarks
