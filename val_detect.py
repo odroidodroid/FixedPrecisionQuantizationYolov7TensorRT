@@ -115,29 +115,27 @@ def test(data,
         nb, _, height, width = img.shape  # batch size, channels, height, width
 
         t1 = time_sync()
+        # Run model
 
-        with torch.no_grad():
-            # Run model
-    
-            dt[0] += t1 - t0 
-            out, train_out = model(img, augment=augment)  # inference and training outputs
-            t2 = time_sync()
-            dt[1] += t2 - t1
-            t3 = time_sync()
+        dt[0] += t1 - t0 
+        out, train_out = model(img, augment=augment)  # inference and training outputs
+        t2 = time_sync()
+        dt[1] += t2 - t1
+        t3 = time_sync()
 
-            # Compute loss
-            if compute_loss:
-                loss += compute_loss([x.float() for x in train_out], targets)[1][:3]  # box, obj, cls
+        # Compute loss
+        if compute_loss:
+            loss += compute_loss([x.float() for x in train_out], targets)[1][:3]  # box, obj, cls
 
-            dt[2] = time_sync() - t3
+        dt[2] = time_sync() - t3
 
-            # Run NMS
-            targets[:, 2:] *= torch.Tensor([width, height, width, height]).to(device)  # to pixels
-            lb = [targets[targets[:, 0] == i, 1:] for i in range(nb)] if save_hybrid else []  # for autolabelling
-            t = time_synchronized()
-            out = non_max_suppression(out, conf_thres=conf_thres, iou_thres=iou_thres, labels=lb, multi_label=True)
-            t1 += time_synchronized() - t
-            seen += 1
+        # Run NMS
+        targets[:, 2:] *= torch.Tensor([width, height, width, height]).to(device)  # to pixels
+        lb = [targets[targets[:, 0] == i, 1:] for i in range(nb)] if save_hybrid else []  # for autolabelling
+        t = time_synchronized()
+        out = non_max_suppression(out, conf_thres=conf_thres, iou_thres=iou_thres, labels=lb, multi_label=True)
+        t1 += time_synchronized() - t
+        seen += 1
 
         if evaluate :         
 
@@ -250,7 +248,7 @@ def test(data,
 
     # Print speeds
     if not training:
-        print('Speed: inference {} ms NMS {} ms image {} ms per 1 image'.format((dt[1] / seen * 1E3), (dt[2] / seen * 1E3), ((dt[0] / seen * 1E3))))
+        print('Speed: inference {} ms NMS {} ms image {} ms per 1 image'.format((dt[1] / seen) * 1E3, (dt[2] / seen) * 1E3, ((dt[0] / seen) * 1E3)))
 
 
 
