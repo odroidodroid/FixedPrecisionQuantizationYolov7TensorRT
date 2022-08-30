@@ -46,8 +46,8 @@ def test(data,
          trace=False,
          is_coco=False,
          int8=True,
-         calib_dataset_path='',
-         calib_cache_path='',
+         calib_dataset_path='/home/sony/datasets/coco/images/train2017',
+         calib_cache_path='/home/sony/projects/runs/calib_cache/yolov7_calib_cache.cache',
          resize=True,
          evaluate=False,
          set_device=''
@@ -409,6 +409,8 @@ if __name__ == '__main__':
              resize=opt.resize,
              evaluate=opt.evaluate,
              set_device=opt.device,
+             calib_dataset_path='/home/sony/datasets/coco/images/train2017',
+             calib_cache_path='/home/sony/projects/runs/calib_cache/yolov7_calib_cache.cache',
              )
 
     elif opt.task == 'speed':  # speed benchmarks
