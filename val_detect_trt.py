@@ -131,8 +131,9 @@ def test(data,
     jdict, stats, ap, ap_class, wandb_images = [], [], [], [], []
     for batch_i, (img, targets, paths, shapes) in enumerate(tqdm(dataloader, desc=s)):
 
-        img = img.to(device, non_blocking=True)
-        img = img.float()  # uint8 to fp16/32
+        #img = img.to(device, non_blocking=True)
+        img = img.cpu().numpy()
+        img = img.astype(np.float32)
         img /= 255.0  # 0 - 255 to 0.0 - 1.0
         targets = targets.to(device)
         nb, _, height, width = img.shape  # batch size, channels, height, width
@@ -144,7 +145,10 @@ def test(data,
 
         t0 = time_sync()
 
+
+
         for binding in engine :
+
             if engine.binding_is_input(binding) : 
                 context.set_binding_shape(0, profile_shape)
                 shape = context.get_binding_shape(0)
@@ -156,7 +160,7 @@ def test(data,
 
                 input = common.HostDeviceMem(host_mem, device_mem)
 
-            elif binding == 'output' :
+            else :
                 size = trt.volume(engine.get_binding_shape(binding))
                 dtype = trt.nptype(engine.get_binding_dtype(binding))
 
@@ -165,9 +169,9 @@ def test(data,
 
                 output = common.HostDeviceMem(host_mem, device_mem)
 
-        bindings.append(int(device_mem))
+            bindings.append(int(device_mem))
 
-
+        np.copyto(input.host, img)
         # Run model
         t1 = time_sync()
 

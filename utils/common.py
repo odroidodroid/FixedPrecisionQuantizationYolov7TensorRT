@@ -54,7 +54,7 @@ import pycuda.driver as cuda
 import pycuda.autoinit
 import tensorrt as trt
 from utils.torch_utils import time_sync
-
+import time
 EXPLICIT_BATCH = 1 << (int)(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH)
 
 
@@ -163,9 +163,9 @@ def do_inference_v2(context, binding, input, output, stream):
     # Transfer input data to the GPU.
     cuda.memcpy_htod_async(input.device, input.host, stream)
     # Run inference.
-    t1 = time_sync()
+    t1 = time.time()
     context.execute_async_v2(bindings=binding, stream_handle=stream.handle)
-    t2 = time_sync()
+    t2 = time.time()
     # Transfer predictions back from the GPU.
     cuda.memcpy_dtoh_async(output.host, output.device, stream)
     # Synchronize the stream
