@@ -45,7 +45,7 @@ def test(data,
          half=False,
          trace=False,
          is_coco=False,
-         int8=False,
+         int8=True,
          calib_dataset_path='',
          calib_cache_path='',
          resize=True,
@@ -375,7 +375,7 @@ if __name__ == '__main__':
     parser.add_argument('--no-trace', default=True, help='don`t trace model')
 
     parser.add_argument('--half', default=False)
-    parser.add_argument('--int8', default=False)
+    parser.add_argument('--int8', default=True)
     parser.add_argument('--calib_dataset_path', default='/home/sony/datasets/coco/images/train2017')
     parser.add_argument('--calib_cache_path', default='/home/sony/projects/runs/calib_cache/yolov7_calib_cache.cache')
     parser.add_argument('--resize', default=True)
