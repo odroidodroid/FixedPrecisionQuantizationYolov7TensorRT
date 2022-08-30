@@ -286,7 +286,7 @@ if __name__ == '__main__':
         test(data=opt.data,
              weights=opt.weights,
              batch_size=opt.batch_size,
-             img_size=opt.img_size,
+             imgsz=opt.img_size,
              conf_thres=opt.conf_thres,
              iou_thres=opt.iou_thres,
              save_json=opt.save_json,
